@@ -1,6 +1,7 @@
 //import from packages
 const express = require("express");
 const mongoose = require("mongoose");
+var cors = require('cors')
 
 //mongodatabase
 const DB="mongodb+srv://sahadev:sawdev@cluster0.hk8hk8o.mongodb.net/?retryWrites=true&w=majority"
@@ -14,8 +15,10 @@ const PORT = 3000;
 const app = express();
 
 //middleware
+app.use(cors()) 
 app.use(express.json());
 app.use(authRouter);
+
 
 //connections
 mongoose.connect(DB).then(() => { console.log("Connection successful"); })
