@@ -3,7 +3,9 @@ import 'package:amazon_clone/common/widgets/custom_button.dart';
 import 'package:amazon_clone/common/widgets/custom_textfield.dart';
 import 'package:amazon_clone/constants/global_variable.dart';
 import 'package:amazon_clone/constants/utils.dart';
+import 'package:amazon_clone/features/auth/cubit/login_cubit.dart';
 import 'package:amazon_clone/features/auth/cubit/signup_cubit.dart';
+import 'package:amazon_clone/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -157,7 +159,7 @@ class _AuthScreenWidgetState extends State<AuthScreenWidget> {
                   padding: const EdgeInsets.all(8),
                   color: GlobalVariables.backgroundColor,
                   child: Form(
-                    key: _signUpFromKey,
+                    key: _signInFromKey,
                     child: Column(
                       children: [
                         CustomTextField(
@@ -172,7 +174,14 @@ class _AuthScreenWidgetState extends State<AuthScreenWidget> {
                         const SizedBox(height: 10),
                         CustomButton(
                           text: "Sign In",
-                          onTap: () {},
+                          onTap: () {
+                            if (_signInFromKey.currentState!.validate()) {
+                              context.read<LoginCubit>().loginUser(
+                                    email: _emailController.text,
+                                    password: _passwordController.text,
+                                  );
+                            }
+                          },
                         )
                       ],
                     ),

@@ -19,20 +19,14 @@ class SignupSource {
         type: '',
         token: '',
       );
-      final response = await dio.post(
+      await dio.post(
         "${GlobalVariables.baseUrl}/api/signup",
         data: user.toJson(),
         options: Options(
           headers: {'Content-Type': 'application/json'},
         ),
       );
-
-      if (response.statusCode == 200) {
-        return const Right(null); // Successful signup
-      } else {
-        return Left(
-            "Server returned ${response.statusCode} error: ${response.data}");
-      }
+      return const Right(null);
     } on DioException catch (e) {
       return Left(e.response?.data["error"] ?? "Unable to signup");
     } catch (e) {

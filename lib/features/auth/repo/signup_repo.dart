@@ -1,6 +1,5 @@
 import 'package:amazon_clone/features/auth/data_source/signup_source.dart';
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 
 class SignupRepository {
   final SignupSource userSource;
@@ -10,17 +9,10 @@ class SignupRepository {
     required String name,
     required String password,
   }) async {
-    try {
-      await userSource.signupUser(
-        email: email,
-        name: name,
-        password: password,
-      );
-      return const Right(null);
-    } on DioException catch (e) {
-      return Left(e.toString());
-    } catch (e) {
-      return Left(e.toString());
-    }
+    return await userSource.signupUser(
+      email: email,
+      name: name,
+      password: password,
+    );
   }
 }
