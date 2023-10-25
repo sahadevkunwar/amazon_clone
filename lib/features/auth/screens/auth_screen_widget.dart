@@ -5,7 +5,7 @@ import 'package:amazon_clone/constants/global_variable.dart';
 import 'package:amazon_clone/constants/utils.dart';
 import 'package:amazon_clone/features/auth/cubit/login_cubit.dart';
 import 'package:amazon_clone/features/auth/cubit/signup_cubit.dart';
-import 'package:amazon_clone/models/user.dart';
+import 'package:amazon_clone/features/auth/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -40,30 +40,55 @@ class _AuthScreenWidgetState extends State<AuthScreenWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<SignupCubit, CommonState>(
-      listener: (context, state) {
-        if (state is CommonErrorState) {
-          showSnackBar(
-            context: context,
-            text: state.message,
-            backgroundColor: Colors.red,
-          );
-        } else if (state is CommonLoadingState) {
-          const CircularProgressIndicator();
-        } else if (state is CommonSuccessState) {
-          showSnackBar(
-            context: context,
-            text: "User signed up successfully",
-            backgroundColor: Colors.green,
-          );
-          _emailController.text = "";
-          _nameController.text = "";
-          _passwordController.text = "";
-          setState(() {
-            _auth = Auth.signIn;
-          });
-        }
-      },
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<SignupCubit, CommonState>(
+          listener: (context, state) {
+            if (state is CommonErrorState) {
+              showSnackBar(
+                context: context,
+                text: state.message,
+                backgroundColor: Colors.red,
+              );
+            } else if (state is CommonLoadingState) {
+              const CircularProgressIndicator();
+            } else if (state is CommonSuccessState) {
+              showSnackBar(
+                context: context,
+                text: "User signed up successfully",
+                backgroundColor: Colors.green,
+              );
+              _emailController.text = "";
+              _nameController.text = "";
+              _passwordController.text = "";
+              setState(() {
+                _auth = Auth.signIn;
+              });
+            }
+          },
+        ),
+        BlocListener<LoginCubit, CommonState>(
+          listener: (context, state) {
+            if (state is CommonSuccessState) {
+              showSnackBar(
+                context: context,
+                text: "User logged in successfully",
+                backgroundColor: Colors.green,
+              );
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => const HomeScreen()),
+                  (route) => false);
+            }
+            if (state is CommonErrorState) {
+              showSnackBar(
+                context: context,
+                text: state.message.toString(),
+                backgroundColor: Colors.red,
+              );
+            }
+          },
+        ),
+      ],
       child: Scaffold(
         backgroundColor: GlobalVariables.greyBackgroundCOlor,
         body: Padding(
