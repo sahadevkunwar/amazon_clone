@@ -1,8 +1,8 @@
 import 'package:amazon_clone/features/auth/cubit/login_cubit.dart';
 import 'package:amazon_clone/features/auth/data_source/login_source.dart';
 import 'package:amazon_clone/features/auth/repo/login_repo.dart';
+import 'package:amazon_clone/features/splash/startup_cubit.dart';
 import 'package:get_it/get_it.dart';
-
 import 'features/auth/cubit/signup_cubit.dart';
 import 'features/auth/data_source/signup_source.dart';
 import 'features/auth/repo/signup_repo.dart';
@@ -22,4 +22,10 @@ Future<void> bootstrap() async {
       () => LoginRepo(loginSource: getIt<LoginSource>()));
   getIt.registerLazySingleton<LoginCubit>(
       () => LoginCubit(loginRepo: getIt<LoginRepo>()));
+
+  //[startup singleton]
+  getIt<LoginSource>().initialize();
+
+  getIt.registerLazySingleton<StartupCubit>(
+      () => StartupCubit(loginSource: getIt<LoginSource>()));
 }
