@@ -1,11 +1,15 @@
 import 'package:amazon_clone/common/bloc/common_state.dart';
+import 'package:amazon_clone/common/widgets/bottom_bar.dart';
 import 'package:amazon_clone/common/widgets/custom_button.dart';
 import 'package:amazon_clone/common/widgets/custom_textfield.dart';
 import 'package:amazon_clone/constants/global_variable.dart';
 import 'package:amazon_clone/constants/utils.dart';
+import 'package:amazon_clone/features/admin/admin_screen.dart';
 import 'package:amazon_clone/features/auth/cubit/login_cubit.dart';
 import 'package:amazon_clone/features/auth/cubit/signup_cubit.dart';
+import 'package:amazon_clone/features/auth/model/user_role_enum.dart';
 import 'package:amazon_clone/features/auth/screens/home_screen.dart';
+import 'package:amazon_clone/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -29,6 +33,7 @@ class _AuthScreenWidgetState extends State<AuthScreenWidget> {
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  //final bool _isLoading = false;
 
   @override
   void dispose() {
@@ -69,15 +74,29 @@ class _AuthScreenWidgetState extends State<AuthScreenWidget> {
         ),
         BlocListener<LoginCubit, CommonState>(
           listener: (context, state) {
-            if (state is CommonSuccessState) {
+            if (state is CommonSuccessState<User>) {
               showSnackBar(
                 context: context,
                 text: "User logged in successfully",
                 backgroundColor: Colors.green,
               );
-              Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => const HomeScreen()),
-                  (route) => false);
+
+              final userRole = state.item.currentRole;
+              if (userRole == UserRole.user) {
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => const BottomBar()),
+                  (route) => false,
+                );
+              } else if (userRole == UserRole.admin) {
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => const AdminScreen()),
+                  (route) => false,
+                );
+              }
+
+              // Navigator.of(context).pushAndRemoveUntil(
+              //     MaterialPageRoute(builder: (context) => const BottomBar()),
+              //     (route) => false);
             }
             if (state is CommonErrorState) {
               showSnackBar(

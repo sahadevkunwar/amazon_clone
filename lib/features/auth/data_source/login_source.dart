@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:amazon_clone/common/utils/shared_prefs.dart';
 import 'package:amazon_clone/constants/global_variable.dart';
 import 'package:amazon_clone/models/user.dart';
@@ -18,38 +17,35 @@ class LoginSource {
   User? get user => _user;
   String _token = '';
   String get token => _token;
-  Future initialize() async {
-    final appToken = await SharedPrefUtisl.getToken();
-    _token = appToken;
-    await getUserData();
-  }
 
-  Future logout() async {
-    await SharedPrefUtisl.removeToken();
-    _token = "";
-    _user = null;
-  }
-
-  Future<Either<String, void>> getUserData() async {
+  Future<Either<String, User>> getUserData(String token) async {
     try {
       Dio dio = Dio();
-      _token = await SharedPrefUtisl.getToken();
+      // _token = await SharedPrefUtisl.getToken();
       var tokenRes = await dio.post("${GlobalVariables.baseUrl}/tokenIsValid",
           options: Options(headers: {
             'x-auth-token': token,
             'Content-Type': 'application/json',
           }));
-      var response = jsonDecode(tokenRes.data);
-      if (response == true) {
+      var response = jsonEncode(tokenRes.data);
+      if (response == 'true') {
         final userRes = await dio.get("${GlobalVariables.baseUrl}/",
             options: Options(headers: {
               'x-auth-token': token,
               'Content-Type': 'application/json',
             }));
-        _user = User.fromMap(userRes as Map<String, dynamic>);
+        final tempUser = User.fromMap(userRes.data);
+        _user = tempUser;
+        await SharedPrefUtisl.saveUser(tempUser);
       }
 
-      return const Right(null);
+      //_user = User.fromMap(jsonDecode(userRes as String));
+      // _user = User.fromMap(json.decode(userRes));
+
+      // await SharedPrefUtisl.saveUser(_user!);
+
+      await SharedPrefUtisl.saveToken(json.encode(user!.token));
+      return Right(user!);
     } on DioException catch (e) {
       return Left(e.response?.data["error"] ?? "Unable to signin");
     } catch (e) {
@@ -57,7 +53,7 @@ class LoginSource {
     }
   }
 
-  Future<Either<String, void>> loginUser(
+  Future<Either<String, String>> loginUser(
       {required String email, required String password}) async {
     try {
       final Dio dio = Dio();
@@ -70,13 +66,14 @@ class LoginSource {
       );
       final tmpToken = jsonEncode(res.data['token']);
       _token = tmpToken;
+      // final tempUser = User.fromMap(jsonDecode(res.data));
       final tempUser = User.fromMap(res.data);
       // await SharedPrefUtisl.saveToken(jsonEncode(res.data));
       _user = tempUser;
-      await SharedPrefUtisl.saveUser(tempUser);
-      await SharedPrefUtisl.saveToken(tmpToken);
+      // await SharedPrefUtisl.saveUser(tempUser);
+      //await SharedPrefUtisl.saveToken(tmpToken);
 
-      return const Right(null);
+      return Right(user!.token);
     } on DioException catch (e) {
       return Left(e.response?.data["error"] ?? "Unable to signin");
     } catch (e) {
