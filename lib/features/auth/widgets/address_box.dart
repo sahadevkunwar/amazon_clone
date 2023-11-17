@@ -1,12 +1,15 @@
-import 'package:amazon_clone/models/user.dart';
+import 'package:amazon_clone/features/auth/data_source/user_repo.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddressBox extends StatelessWidget {
-  final User user;
-  const AddressBox({super.key, required this.user});
+  const AddressBox({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final userRepo = context.read<UserRepository>();
     return Container(
       height: 40,
       decoration: const BoxDecoration(
@@ -27,7 +30,7 @@ class AddressBox extends StatelessWidget {
             size: 20,
           ),
           Text(
-            'Delivery to ${user.name} -',
+            'Delivery to  -${userRepo.user?.name}',
             style: const TextStyle(
               fontWeight: FontWeight.w500,
             ),

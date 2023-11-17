@@ -5,7 +5,8 @@ import 'package:amazon_clone/features/account/ui/widgets/top_buttons.dart';
 import 'package:flutter/material.dart';
 
 class AccountScreen extends StatefulWidget {
-  const AccountScreen({super.key});
+  
+  const AccountScreen({super.key,});
 
   @override
   State<AccountScreen> createState() => _AccountScreenState();

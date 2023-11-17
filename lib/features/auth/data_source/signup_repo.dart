@@ -3,7 +3,7 @@ import 'package:amazon_clone/models/user.dart';
 import 'package:dio/dio.dart';
 import 'package:dartz/dartz.dart';
 
-class SignupSource {
+class SignupRepository {
   Future<Either<String, void>> signupUser({
     required String email,
     required String name,

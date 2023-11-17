@@ -1,5 +1,5 @@
 import 'package:amazon_clone/common/bloc/common_state.dart';
-import 'package:amazon_clone/features/auth/repo/signup_repo.dart';
+import 'package:amazon_clone/features/auth/data_source/signup_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SignupCubit extends Cubit<CommonState> {

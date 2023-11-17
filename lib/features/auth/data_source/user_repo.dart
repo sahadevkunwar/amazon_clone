@@ -5,7 +5,7 @@ import 'package:amazon_clone/models/user.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
-class LoginSource {
+class UserRepository {
   // User _user =
   //     User(id: '', name: '', email: '', password: '', type: '', token: '');
   // User get user => _user;
@@ -15,8 +15,22 @@ class LoginSource {
   // }
   User? _user;
   User? get user => _user;
-  String _token = '';
+  String _token = "";
   String get token => _token;
+
+  Future initialize() async {
+    final appToken = await SharedPrefUtisl.getToken();
+    final appUser = await SharedPrefUtisl.getUser();
+    _token = appToken;
+    _user = appUser;
+  }
+
+  Future logout() async {
+    await SharedPrefUtisl.removeToken();
+    await SharedPrefUtisl.removeUser();
+    _token = "";
+    _user = null;
+  }
 
   Future<Either<String, User>> getUserData(String token) async {
     try {
@@ -34,9 +48,13 @@ class LoginSource {
               'x-auth-token': token,
               'Content-Type': 'application/json',
             }));
-        final tempUser = User.fromMap(userRes.data);
-        _user = tempUser;
-        await SharedPrefUtisl.saveUser(tempUser);
+
+        final String tmpToken = userRes.data["token"];
+        final tmpUser = User.fromMap(userRes.data);
+        _user = tmpUser;
+        _token = tmpToken;
+        await SharedPrefUtisl.saveUser(tmpUser);
+        await SharedPrefUtisl.saveToken(tmpToken);
       }
 
       //_user = User.fromMap(jsonDecode(userRes as String));
