@@ -1,4 +1,7 @@
 import 'package:amazon_clone/constants/global_variable.dart';
+import 'package:amazon_clone/features/admin/cubit/admin_cubit.dart';
+import 'package:amazon_clone/features/admin/cubit/fetch_product_cubit.dart';
+import 'package:amazon_clone/features/admin/repository/admin_repository.dart';
 import 'package:amazon_clone/features/auth/cubit/login_cubit.dart';
 import 'package:amazon_clone/features/auth/cubit/signup_cubit.dart';
 import 'package:amazon_clone/features/auth/data_source/signup_repo.dart';
@@ -27,6 +30,11 @@ class MyApp extends StatelessWidget {
         RepositoryProvider(
           create: (context) => SignupRepository(),
         ),
+        RepositoryProvider(
+          create: (context) => AdminRepository(
+            userRepository: context.read<UserRepository>(),
+          ),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -39,6 +47,14 @@ class MyApp extends StatelessWidget {
             create: (context) => SignupCubit(
               signupRepository: context.read<SignupRepository>(),
             ),
+          ),
+          BlocProvider(
+            create: (context) => FetchProductCubit(
+                adminRepository: context.read<AdminRepository>()),
+          ),
+          BlocProvider(
+            create: (context) =>
+                AdminCubit(adminRepository: context.read<AdminRepository>()),
           ),
         ],
         child: MaterialApp(

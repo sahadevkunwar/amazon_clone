@@ -3,8 +3,7 @@ import 'dart:convert';
 import 'package:amazon_clone/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
-class SharedPrefUtisl{
+class SharedPrefUtisl {
   static const String _tokenKey = "appToken";
   static const String _userKey = "user";
 

@@ -1,6 +1,6 @@
 import 'package:amazon_clone/common/bloc/common_state.dart';
 import 'package:amazon_clone/common/widgets/bottom_bar.dart';
-import 'package:amazon_clone/features/admin/admin_screen.dart';
+import 'package:amazon_clone/features/admin/screens/admin_screen.dart';
 import 'package:amazon_clone/features/auth/data_source/user_repo.dart';
 import 'package:amazon_clone/features/auth/model/user_role_enum.dart';
 import 'package:amazon_clone/features/auth/screens/auth_screen.dart';

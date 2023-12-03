@@ -62,7 +62,7 @@ class UserRepository {
 
       // await SharedPrefUtisl.saveUser(_user!);
 
-      await SharedPrefUtisl.saveToken(json.encode(user!.token));
+      //  await SharedPrefUtisl.saveToken(json.encode(user!.token));
       return Right(user!);
     } on DioException catch (e) {
       return Left(e.response?.data["error"] ?? "Unable to signin");

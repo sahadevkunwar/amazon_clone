@@ -7,7 +7,8 @@ var cors = require('cors')
 const DB = "mongodb+srv://sahadev:sawdev@cluster0.hk8hk8o.mongodb.net/?retryWrites=true&w=majority"
 
 //import from other files
-const authRouter = require("./routes/auth")
+const authRouter = require("./routes/auth");
+const adminRouter = require("./routes/admin");
 
 
 //initialize
@@ -18,6 +19,8 @@ const app = express();
 app.use(cors())
 app.use(express.json());
 app.use(authRouter);
+app.use(adminRouter);
+
 
 
 //connections

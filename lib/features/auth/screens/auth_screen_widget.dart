@@ -4,7 +4,7 @@ import 'package:amazon_clone/common/widgets/custom_button.dart';
 import 'package:amazon_clone/common/widgets/custom_textfield.dart';
 import 'package:amazon_clone/constants/global_variable.dart';
 import 'package:amazon_clone/constants/utils.dart';
-import 'package:amazon_clone/features/admin/admin_screen.dart';
+import 'package:amazon_clone/features/admin/screens/admin_screen.dart';
 import 'package:amazon_clone/features/auth/cubit/login_cubit.dart';
 import 'package:amazon_clone/features/auth/cubit/signup_cubit.dart';
 import 'package:amazon_clone/features/auth/model/user_role_enum.dart';
@@ -193,6 +193,8 @@ class _AuthScreenWidgetState extends State<AuthScreenWidget> {
                                     );
                               }
                             },
+                            backColors: Colors.amber,
+                            foreColor: Colors.white,
                           )
                         ],
                       ),
@@ -246,6 +248,8 @@ class _AuthScreenWidgetState extends State<AuthScreenWidget> {
                                     );
                               }
                             },
+                            backColors: Colors.amber,
+                            foreColor: Colors.white,
                           )
                         ],
                       ),
