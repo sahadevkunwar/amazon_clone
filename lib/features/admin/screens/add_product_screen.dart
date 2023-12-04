@@ -98,6 +98,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 );
               }
               if (state is CommonSuccessState) {
+                context.read<FetchProductCubit>().fetchAllProduct();
+
                 showSnackBar(
                   context: context,
                   text: "Product added successfully",
@@ -115,7 +117,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     MaterialPageRoute(
                         builder: (context) => const AdminScreen()),
                     (route) => false);
-                context.read<FetchProductCubit>().fetchAllProduct();
               }
             }
           },

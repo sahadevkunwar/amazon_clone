@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => FetchProductCubit(
-                adminRepository: context.read<AdminRepository>()),
+                adminRepository: context.read<AdminRepository>())..fetchAllProduct(),
           ),
           BlocProvider(
             create: (context) =>
