@@ -1,5 +1,6 @@
 import 'package:amazon_clone/common/bloc/common_state.dart';
-import 'package:amazon_clone/constants/global_variable.dart';
+import 'package:amazon_clone/constants/utils.dart';
+import 'package:amazon_clone/features/admin/cubit/delete_cubit.dart';
 import 'package:amazon_clone/features/admin/cubit/fetch_product_cubit.dart';
 import 'package:amazon_clone/features/admin/screens/add_product_screen.dart';
 import 'package:amazon_clone/features/admin/screens/widgets/product_card.dart';
@@ -19,31 +20,50 @@ class _PostScreenWidgetState extends State<PostScreenWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<FetchProductCubit, CommonState>(
-        builder: (context, state) {
+      body: BlocListener<DeleteCubit, CommonState>(
+        listener: (context, state) {
           if (state is CommonErrorState) {
-            return Center(child: Text(state.message));
-          }
-          if (state is CommonSuccessState<List<Product>>) {
-            return GridView.builder(
-              // controller: _scrollController,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, // Set the number of columns
-                crossAxisSpacing: 5.0, // Set the spacing between columns
-                mainAxisSpacing: 5.0, // Set the spacing between rows
-              ),
-              padding: const EdgeInsets.all(5),
-              itemCount: state.item.length,
-              itemBuilder: (context, index) {
-                return ProductCard(
-                  product: state.item[index],
-                );
-              },
+            showSnackBar(
+              context: context,
+              text: state.message,
+              backgroundColor: Colors.red,
             );
-          } else {
-            return const Center(child: CupertinoActivityIndicator());
+          }
+          if (state is CommonSuccessState) {
+            context.read<FetchProductCubit>().fetchAllProduct();
+            showSnackBar(
+              context: context,
+              text: 'Product deleted successfully',
+              backgroundColor: Colors.green,
+            );
           }
         },
+        child: BlocBuilder<FetchProductCubit, CommonState>(
+          builder: (context, state) {
+            if (state is CommonErrorState) {
+              return Center(child: Text(state.message));
+            }
+            if (state is CommonSuccessState<List<Product>>) {
+              return GridView.builder(
+                // controller: _scrollController,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, // Set the number of columns
+                  crossAxisSpacing: 5.0, // Set the spacing between columns
+                  mainAxisSpacing: 5.0, // Set the spacing between rows
+                ),
+                padding: const EdgeInsets.all(5),
+                itemCount: state.item.length,
+                itemBuilder: (context, index) {
+                  return ProductCard(
+                    product: state.item[index],
+                  );
+                },
+              );
+            } else {
+              return const Center(child: CupertinoActivityIndicator());
+            }
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

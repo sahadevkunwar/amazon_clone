@@ -1,5 +1,6 @@
 import 'package:amazon_clone/constants/global_variable.dart';
 import 'package:amazon_clone/features/admin/cubit/admin_cubit.dart';
+import 'package:amazon_clone/features/admin/cubit/delete_cubit.dart';
 import 'package:amazon_clone/features/admin/cubit/fetch_product_cubit.dart';
 import 'package:amazon_clone/features/admin/repository/admin_repository.dart';
 import 'package:amazon_clone/features/auth/cubit/login_cubit.dart';
@@ -50,12 +51,18 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => FetchProductCubit(
-                adminRepository: context.read<AdminRepository>())..fetchAllProduct(),
+                adminRepository: context.read<AdminRepository>())
+              ..fetchAllProduct(),
           ),
           BlocProvider(
             create: (context) =>
                 AdminCubit(adminRepository: context.read<AdminRepository>()),
           ),
+          BlocProvider(
+            create: (context) => DeleteCubit(
+              adminRepository: context.read<AdminRepository>(),
+            ),
+          )
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

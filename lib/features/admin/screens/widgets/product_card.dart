@@ -1,3 +1,4 @@
+import 'package:amazon_clone/common/utils/confirm_delete_dialog.dart';
 import 'package:amazon_clone/common/utils/custom_loading_placeholder.dart';
 import 'package:amazon_clone/models/product.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -89,14 +90,30 @@ class ProductCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.only(bottom: 5),
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "Rs.${product.price}",
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w700),
-                    ),
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(bottom: 5),
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Rs.${product.price}",
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                      const Spacer(),
+                      IconButton(
+                        tooltip: 'Delete',
+                        iconSize: 20,
+                        onPressed: () {
+                          // context
+                          //     .read<DeleteCubit>()
+                          //     .deleteProduct(id: product.id.toString());
+                          confirmDelete(context, product.id.toString());
+                        },
+                        icon: const Icon(Icons.delete),
+                      )
+                    ],
                   )
                 ],
               ),

@@ -84,4 +84,23 @@ class AdminRepository {
       return Left(e.toString());
     }
   }
+
+  Future<Either<String, void>> deleteProduct({required String id}) async {
+    try {
+      final Dio dio = Dio();
+      final Map<String, dynamic> header = {
+        "x-auth-token": userRepository.token,
+      };
+      final _ = await dio.post(
+        "${GlobalVariables.baseUrl}/admin/delete-product",
+        options: Options(headers: header),
+        data: {"id": id},
+      );
+      return const Right(null);
+    } on DioException catch (e) {
+      return Left(e.response?.data["error"] ?? "Unable to fetch product");
+    } catch (e) {
+      return Left(e.toString());
+    }
+  }
 }
