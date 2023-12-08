@@ -1,9 +1,12 @@
 import 'package:amazon_clone/common/utils/confirm_delete_dialog.dart';
 import 'package:amazon_clone/common/utils/custom_loading_placeholder.dart';
+import 'package:amazon_clone/features/auth/data_source/user_repo.dart';
+import 'package:amazon_clone/features/auth/model/user_role_enum.dart';
 import 'package:amazon_clone/models/product.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
@@ -32,7 +35,6 @@ class ProductCard extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 5),
                   CarouselSlider(
                     items: product.images.map((i) {
                       return Builder(
@@ -67,7 +69,7 @@ class ProductCard extends StatelessWidget {
                     }).toList(),
                     options: CarouselOptions(
                       viewportFraction: 1,
-                      height: 80,
+                      height: 150,
                     ),
                   ),
                   Container(
@@ -76,7 +78,7 @@ class ProductCard extends StatelessWidget {
                     child: Text(
                       product.name,
                       style: const TextStyle(
-                          fontSize: 14, fontWeight: FontWeight.w700),
+                          fontSize: 15, fontWeight: FontWeight.w700),
                     ),
                   ),
                   Container(
@@ -98,23 +100,30 @@ class ProductCard extends StatelessWidget {
                         child: Text(
                           "Rs.${product.price}",
                           style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w700),
+                            fontSize: 15,
+                          ),
                         ),
                       ),
                       const Spacer(),
-                      IconButton(
-                        tooltip: 'Delete',
-                        iconSize: 20,
-                        onPressed: () {
-                          // context
-                          //     .read<DeleteCubit>()
-                          //     .deleteProduct(id: product.id.toString());
-                          confirmDelete(context, product.id.toString());
-                        },
-                        icon: const Icon(Icons.delete),
-                      )
+                      (context.read<UserRepository>().user?.currentRole ==
+                              UserRole.admin)
+                          ? IconButton(
+                              tooltip: 'Delete',
+                              iconSize: 18,
+                              onPressed: () {
+                                // context
+                                //     .read<DeleteCubit>()
+                                //     .deleteProduct(id: product.id.toString());
+                                confirmDelete(context, product.id.toString());
+                              },
+                              icon: const Icon(Icons.delete),
+                            )
+                          : const SizedBox.shrink()
                     ],
-                  )
+                  ),
+                  // const SizedBox(
+                  //   height: 10,
+                  // )
                 ],
               ),
             ),

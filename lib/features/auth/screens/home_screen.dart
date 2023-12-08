@@ -1,10 +1,10 @@
 import 'package:amazon_clone/constants/global_variable.dart';
 import 'package:amazon_clone/features/auth/data_source/user_repo.dart';
 import 'package:amazon_clone/features/auth/screens/auth_screen.dart';
-import 'package:amazon_clone/features/auth/widgets/address_box.dart';
-import 'package:amazon_clone/features/auth/widgets/carousel_image.dart';
-import 'package:amazon_clone/features/auth/widgets/deal_of_day.dart';
-import 'package:amazon_clone/features/auth/widgets/top_categories.dart';
+import 'package:amazon_clone/features/home/widgets/address_box.dart';
+import 'package:amazon_clone/features/home/widgets/carousel_image.dart';
+import 'package:amazon_clone/features/home/widgets/deal_of_day.dart';
+import 'package:amazon_clone/features/home/widgets/top_categories.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

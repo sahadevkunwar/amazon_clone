@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 class GlobalVariables {
   static const String baseUrl = "http://localhost:3000";
+  //static const String baseUrl = "http://192.168.1.65:3000";
+
   // COLORS
   static const appBarGradient = LinearGradient(
     colors: [

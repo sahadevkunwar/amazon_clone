@@ -9,6 +9,7 @@ const DB = "mongodb+srv://sahadev:sawdev@cluster0.hk8hk8o.mongodb.net/?retryWrit
 //import from other files
 const authRouter = require("./routes/auth");
 const adminRouter = require("./routes/admin");
+const productRouter = require("./routes/product");
 
 
 //initialize
@@ -20,6 +21,8 @@ app.use(cors())
 app.use(express.json());
 app.use(authRouter);
 app.use(adminRouter);
+app.use(productRouter);
+
 
 
 

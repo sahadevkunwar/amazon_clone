@@ -48,8 +48,9 @@ class _PostScreenWidgetState extends State<PostScreenWidget> {
                 // controller: _scrollController,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, // Set the number of columns
-                  crossAxisSpacing: 5.0, // Set the spacing between columns
-                  mainAxisSpacing: 5.0, // Set the spacing between rows
+                  crossAxisSpacing: 8.0, // Set the spacing between columns
+                  mainAxisSpacing: 10.0,
+                  childAspectRatio: 0.7, // Set the spacing between rows
                 ),
                 padding: const EdgeInsets.all(5),
                 itemCount: state.item.length,

@@ -93,7 +93,7 @@ class UserRepository {
 
       return Right(user!.token);
     } on DioException catch (e) {
-      return Left(e.response?.data["error"] ?? "Unable to signin");
+      return Left(e.response?.data["error"] ?? "Unable to sign In");
     } catch (e) {
       return Left(e.toString());
     }
