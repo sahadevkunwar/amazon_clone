@@ -104,6 +104,7 @@ class _CategoryDealsScreenState extends State<CategoryDealsScreen> {
             ),
           ],
         ),
+      
       ),
     );
   }

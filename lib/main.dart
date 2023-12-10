@@ -9,6 +9,8 @@ import 'package:amazon_clone/features/auth/data_source/signup_repo.dart';
 import 'package:amazon_clone/features/auth/data_source/user_repo.dart';
 import 'package:amazon_clone/features/home/cubit/fetch_product_category.dart';
 import 'package:amazon_clone/features/home/home_repo/home_repo.dart';
+import 'package:amazon_clone/features/search/cubit/search_cubit.dart';
+import 'package:amazon_clone/features/search/repo/search_repo.dart';
 import 'package:amazon_clone/features/splash/ui/splash_page.dart';
 import 'package:amazon_clone/router.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +45,11 @@ class MyApp extends StatelessWidget {
             userRepository: context.read<UserRepository>(),
           ),
         ),
+        RepositoryProvider(
+          create: (context) => SearchRepo(
+            userRepository: context.read<UserRepository>(),
+          ),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -73,7 +80,11 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (context) =>
                 FetchProductCategoryCubit(homeRepo: context.read<HomeRepo>()),
-          )
+          ),
+          BlocProvider(
+            create: (context) =>
+                SearchCubit(searchRepo: context.read<SearchRepo>()),
+          ),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
