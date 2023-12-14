@@ -1,6 +1,7 @@
 import 'package:amazon_clone/constants/global_variable.dart';
 import 'package:amazon_clone/features/auth/data_source/user_repo.dart';
 import 'package:amazon_clone/features/auth/screens/auth_screen.dart';
+import 'package:amazon_clone/features/home/cubit/fetch_deal_of_day_cubit.dart';
 import 'package:amazon_clone/features/home/widgets/address_box.dart';
 import 'package:amazon_clone/features/home/widgets/carousel_image.dart';
 import 'package:amazon_clone/features/home/widgets/deal_of_day.dart';
@@ -22,6 +23,13 @@ class _HomeScreenState extends State<HomeScreen> {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => SearchScreen(searchQuery: query),
     ));
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<DealOfDayCubit>().fetchDealOfDay();
   }
 
   @override
@@ -110,7 +118,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-       
         body: const SingleChildScrollView(
           child: Column(
             children: [

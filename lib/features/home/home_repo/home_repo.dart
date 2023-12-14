@@ -6,8 +6,8 @@ import 'package:dio/dio.dart';
 
 class HomeRepo {
   final UserRepository userRepository;
-
   HomeRepo({required this.userRepository});
+
   Future<Either<String, List<Product>>> fetchCategoryProduct(
       {required String category}) async {
     try {
@@ -23,6 +23,25 @@ class HomeRepo {
 
       productList = List.from(res.data).map((e) => Product.fromMap(e)).toList();
       return Right(productList);
+    } on DioException catch (e) {
+      return Left(e.response?.data["error"] ?? "Unable to fetch product");
+    } catch (e) {
+      return Left(e.toString());
+    }
+  }
+
+  Future<Either<String, Product>> fetchDealOfDay() async {
+    try {
+      final Dio dio = Dio();
+      final Map<String, dynamic> header = {
+        "x-auth-token": userRepository.token,
+      };
+      final res = await dio.get(
+        '${GlobalVariables.baseUrl}/api/deal-of-day',
+        options: Options(headers: header),
+      );
+      final data=Product.fromMap(res.data);
+      return Right(data);
     } on DioException catch (e) {
       return Left(e.response?.data["error"] ?? "Unable to fetch product");
     } catch (e) {

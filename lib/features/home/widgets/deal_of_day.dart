@@ -1,13 +1,15 @@
+import 'package:amazon_clone/common/bloc/common_state.dart';
+import 'package:amazon_clone/features/admin/screens/widgets/product_card.dart';
+import 'package:amazon_clone/features/home/cubit/fetch_deal_of_day_cubit.dart';
+import 'package:amazon_clone/features/product_details/screen/product_detail_screen.dart';
+import 'package:amazon_clone/models/product.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class DealOfDay extends StatefulWidget {
+class DealOfDay extends StatelessWidget {
   const DealOfDay({super.key});
 
-  @override
-  State<DealOfDay> createState() => _DealOfDayState();
-}
-
-class _DealOfDayState extends State<DealOfDay> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -20,89 +22,26 @@ class _DealOfDayState extends State<DealOfDay> {
             style: TextStyle(fontSize: 20),
           ),
         ),
-        Image.asset(
-          'assets/images/amazon_in.png',
-          height: 235,
-          fit: BoxFit.fitHeight,
+        BlocBuilder<DealOfDayCubit, CommonState>(
+          builder: (context, state) {
+            if (state is CommonSuccessState<Product>) {
+              return GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => ProductDetailScreen(product: state.item),
+                    ),
+                  );
+                },
+                child: ProductCard(product: state.item),
+              );
+            } else if (state is CommonErrorState) {
+              return Center(child: Text(state.message));
+            } else {
+              return const CupertinoActivityIndicator();
+            }
+          },
         ),
-        Container(
-          alignment: Alignment.topLeft,
-          padding: const EdgeInsets.only(
-            left: 15,
-          ),
-          child: const Text(
-            '\$100',
-            style: TextStyle(fontSize: 18),
-          ),
-        ),
-        Container(
-          alignment: Alignment.topLeft,
-          padding: const EdgeInsets.only(
-            left: 15,
-            top: 5,
-            right: 40,
-          ),
-          child: const Text(
-            'Sahadev',
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-        SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Image.asset(
-                  'assets/images/amazon_in.png',
-                  fit: BoxFit.fitWidth,
-                  height: 100,
-                  width: 100,
-                ),
-                Image.asset(
-                  'assets/images/amazon_in.png',
-                  fit: BoxFit.fitWidth,
-                  height: 100,
-                  width: 100,
-                ),
-                Image.asset(
-                  'assets/images/amazon_in.png',
-                  fit: BoxFit.fitWidth,
-                  height: 100,
-                  width: 100,
-                ),
-                Image.asset(
-                  'assets/images/amazon_in.png',
-                  fit: BoxFit.fitWidth,
-                  height: 100,
-                  width: 100,
-                ),
-                Image.asset(
-                  'assets/images/amazon_in.png',
-                  fit: BoxFit.fitWidth,
-                  height: 100,
-                  width: 100,
-                ),
-                Image.asset(
-                  'assets/images/amazon_in.png',
-                  fit: BoxFit.fitWidth,
-                  height: 100,
-                  width: 100,
-                ),
-              ],
-            )),
-        Container(
-          padding: const EdgeInsets.only(
-            left: 15,
-            top: 15,
-            right: 15,
-          ),
-          alignment: Alignment.topLeft,
-          child: Text(
-            'See all deals',
-            style: TextStyle(color: Colors.cyan[800]),
-          ),
-        )
       ],
     );
   }
