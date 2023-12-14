@@ -2,6 +2,7 @@ import 'package:amazon_clone/common/utils/confirm_delete_dialog.dart';
 import 'package:amazon_clone/common/utils/custom_loading_placeholder.dart';
 import 'package:amazon_clone/features/auth/data_source/user_repo.dart';
 import 'package:amazon_clone/features/auth/model/user_role_enum.dart';
+import 'package:amazon_clone/features/product_details/screen/product_detail_screen.dart';
 import 'package:amazon_clone/models/product.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -19,6 +20,12 @@ class ProductCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 5),
       child: InkWell(
         onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) => ProductDetailScreen(product: product),
+            ),
+          );
+
           ///here code of navigation of details page
           // Navigator.of(context).push(PageTransition(
           //     child: ProductDetailScreen(productId: product.id),

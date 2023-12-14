@@ -4,6 +4,7 @@ import 'package:amazon_clone/constants/global_variable.dart';
 import 'package:amazon_clone/features/auth/data_source/user_repo.dart';
 import 'package:amazon_clone/features/auth/screens/auth_screen.dart';
 import 'package:amazon_clone/features/home/widgets/address_box.dart';
+import 'package:amazon_clone/features/product_details/screen/product_detail_screen.dart';
 import 'package:amazon_clone/features/search/cubit/search_cubit.dart';
 import 'package:amazon_clone/features/search/widgets/searched_product.dart';
 import 'package:amazon_clone/models/product.dart';
@@ -55,30 +56,22 @@ class _SearchScreenState extends State<SearchScreen> {
                     elevation: 1,
                     child: TextFormField(
                       onFieldSubmitted: navigateToSearchScreen,
-                      decoration: InputDecoration(
-                        prefixIcon: InkWell(
-                          onTap: () {
-                            // Navigator.of(context).push(MaterialPageRoute(
-                            //   builder: (context) => SearchScreen(
-                            //       searchQuery: searchController.text),
-                            // ));
-                          },
-                          child: const Icon(
-                            Icons.search,
-                            color: Colors.black,
-                            size: 23,
-                          ),
+                      decoration: const InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.search,
+                          color: Colors.black,
+                          size: 23,
                         ),
                         filled: true,
                         fillColor: Colors.white,
-                        contentPadding: const EdgeInsets.only(top: 10),
-                        border: const OutlineInputBorder(
+                        contentPadding: EdgeInsets.only(top: 10),
+                        border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(
                             Radius.circular(7),
                           ),
                           borderSide: BorderSide.none,
                         ),
-                        enabledBorder: const OutlineInputBorder(
+                        enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(
                             Radius.circular(7),
                           ),
@@ -88,7 +81,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           ),
                         ),
                         hintText: 'Search Amazon.in',
-                        hintStyle: const TextStyle(
+                        hintStyle: TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 17,
                         ),
@@ -138,6 +131,12 @@ class _SearchScreenState extends State<SearchScreen> {
                                 //   ProductDetailScreen.routeName,
                                 //   arguments: products![index],
                                 // );
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (_) => ProductDetailScreen(
+                                        product: state.item[index]),
+                                  ),
+                                );
                               },
                               child: SearchedProduct(
                                 product: state.item[index],

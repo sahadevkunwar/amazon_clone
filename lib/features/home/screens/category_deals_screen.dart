@@ -4,6 +4,7 @@ import 'package:amazon_clone/constants/global_variable.dart';
 import 'package:amazon_clone/constants/utils.dart';
 import 'package:amazon_clone/features/admin/screens/widgets/product_card.dart';
 import 'package:amazon_clone/features/home/cubit/fetch_product_category.dart';
+import 'package:amazon_clone/features/product_details/screen/product_detail_screen.dart';
 import 'package:amazon_clone/models/product.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -104,7 +105,6 @@ class _CategoryDealsScreenState extends State<CategoryDealsScreen> {
             ),
           ],
         ),
-      
       ),
     );
   }
