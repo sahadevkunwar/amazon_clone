@@ -1,7 +1,9 @@
 import 'package:amazon_clone/constants/global_variable.dart';
 import 'package:amazon_clone/features/account/ui/screens/account_screen.dart';
+import 'package:amazon_clone/features/auth/data_source/user_repo.dart';
 import 'package:amazon_clone/features/home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({super.key});
@@ -28,6 +30,8 @@ class _BottomBarState extends State<BottomBar> {
 
   @override
   Widget build(BuildContext context) {
+    final userCartLength =
+        context.watch<UserRepository>().user?.cart?.length ?? 0;
     return Scaffold(
       body: pages[_page],
       bottomNavigationBar: BottomNavigationBar(
@@ -73,27 +77,28 @@ class _BottomBarState extends State<BottomBar> {
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Container(
-              width: bottomBarWidth,
-              decoration: BoxDecoration(
-                border: Border(
-                  top: BorderSide(
-                    color: _page == 2
-                        ? GlobalVariables.selectedNavBarColor
-                        : GlobalVariables.backgroundColor,
-                    width: bottomBarBorderWidth,
+              icon: Container(
+                width: bottomBarWidth,
+                decoration: BoxDecoration(
+                  border: Border(
+                    top: BorderSide(
+                      color: _page == 2
+                          ? GlobalVariables.selectedNavBarColor
+                          : GlobalVariables.backgroundColor,
+                      width: bottomBarBorderWidth,
+                    ),
                   ),
                 ),
+                child: Badge(
+                  backgroundColor: Colors.grey,
+                  textColor: Colors.white,
+                  // backgroundColor: Colors.amber,
+                  label: Text(userCartLength.toString()),
+                  child: const Icon(Icons.shopping_cart_outlined),
+                ),
               ),
-              child: const Badge(
-                textColor: Colors.white,
-                // backgroundColor: Colors.amber,
-                label: Text('2'),
-                child: Icon(Icons.shopping_cart_outlined),
-              ),
-            ),
-            label: '',
-          )
+              label: '',
+              tooltip: 'Cart')
         ],
       ),
     );

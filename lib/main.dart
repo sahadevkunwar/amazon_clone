@@ -10,7 +10,7 @@ import 'package:amazon_clone/features/auth/data_source/user_repo.dart';
 import 'package:amazon_clone/features/home/cubit/fetch_deal_of_day_cubit.dart';
 import 'package:amazon_clone/features/home/cubit/fetch_product_category.dart';
 import 'package:amazon_clone/features/home/home_repo/home_repo.dart';
-import 'package:amazon_clone/features/home/widgets/deal_of_day.dart';
+import 'package:amazon_clone/features/product_details/cubit/add_to_cart_cubit.dart';
 import 'package:amazon_clone/features/product_details/cubit/product_detail_cubit.dart';
 import 'package:amazon_clone/features/product_details/repo/product_detail_repo.dart';
 import 'package:amazon_clone/features/search/cubit/search_cubit.dart';
@@ -101,6 +101,10 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (context) =>
                 DealOfDayCubit(homeRepo: context.read<HomeRepo>()),
+          ),
+          BlocProvider(
+            create: (context) => AddToCartCubit(
+                productDetailRepo: context.read<ProductDetailRepo>()),
           ),
         ],
         child: MaterialApp(

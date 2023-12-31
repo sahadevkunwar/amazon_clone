@@ -13,10 +13,13 @@ class UserRepository {
   // set setUser(String user) {
   //   _user = User.fromMap(jsonDecode(user));
   // }
+
   User? _user;
   User? get user => _user;
   String _token = "";
   String get token => _token;
+  setUser(User user) => _user = user;
+  //SharedPrefUtisl.saveUser(user);
 
   Future initialize() async {
     final appToken = await SharedPrefUtisl.getToken();

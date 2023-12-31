@@ -18,6 +18,7 @@ class SignupRepository {
         password: password,
         type: '',
         token: '',
+        cart: [],
       );
       await dio.post(
         "${GlobalVariables.baseUrl}/api/signup",

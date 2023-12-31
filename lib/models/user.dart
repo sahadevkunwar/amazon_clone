@@ -1,6 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
-
 import 'package:amazon_clone/features/auth/model/user_role_enum.dart';
 
 class User {
@@ -10,6 +8,7 @@ class User {
   final String password;
   final String type;
   final String token;
+  final List<dynamic>? cart;
 
   User({
     required this.id,
@@ -18,7 +17,28 @@ class User {
     required this.password,
     required this.type,
     required this.token,
+    this.cart,
   });
+  User copyWith({
+    String? id,
+    String? name,
+    String? email,
+    String? password,
+    String? type,
+    String? token,
+    List<dynamic>? cart,
+  }) {
+    return User(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      email: email ?? this.email,
+      password: password ?? this.password,
+      type: type ?? this.type,
+      token: token ?? this.token,
+      cart: cart ?? this.cart,
+    );
+  }
+
   // UserRole get currentRole {
   //   if (authorities.isEmpty) {
   //     throw Exception("Role not found");
@@ -58,6 +78,7 @@ class User {
       'password': password,
       'type': type,
       'token': token,
+      'cart': cart,
     };
   }
 
@@ -69,6 +90,17 @@ class User {
       password: map['password'] as String,
       type: map['type'] as String,
       token: map['token'] as String,
+      cart: (map['cart'] as List<dynamic>?)
+          ?.map<Map<String, dynamic>>(
+            (x) => Map<String, dynamic>.from(x),
+          )
+          .toList(),
+      //wrong way
+      // cart: List<Map<String, dynamic>>.from(
+      //   map['cart']?.map(
+      //     (x) => Map<String, dynamic>.from(x),
+      //   ),
+      // ),
     );
   }
 
