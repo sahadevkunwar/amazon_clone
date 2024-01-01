@@ -12,6 +12,7 @@ import 'package:amazon_clone/features/home/cubit/fetch_product_category.dart';
 import 'package:amazon_clone/features/home/home_repo/home_repo.dart';
 import 'package:amazon_clone/features/product_details/cubit/add_to_cart_cubit.dart';
 import 'package:amazon_clone/features/product_details/cubit/product_detail_cubit.dart';
+import 'package:amazon_clone/features/product_details/cubit/remove_from_cart_cubit.dart';
 import 'package:amazon_clone/features/product_details/repo/product_detail_repo.dart';
 import 'package:amazon_clone/features/search/cubit/search_cubit.dart';
 import 'package:amazon_clone/features/search/repo/search_repo.dart';
@@ -104,6 +105,10 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => AddToCartCubit(
+                productDetailRepo: context.read<ProductDetailRepo>()),
+          ),
+          BlocProvider(
+            create: (context) => RemoveFromCartCubit(
                 productDetailRepo: context.read<ProductDetailRepo>()),
           ),
         ],

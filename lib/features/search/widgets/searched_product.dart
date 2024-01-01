@@ -92,5 +92,6 @@ class SearchedProduct extends StatelessWidget {
         ),
       ],
     );
+  
   }
 }
